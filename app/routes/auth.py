@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
+from fastapi.templating import Jinja2Templates
+
+templates = Jinja2Templates(directory="app/templates")
 
 auth_router = APIRouter(
     prefix="/auth",
@@ -6,5 +9,7 @@ auth_router = APIRouter(
 )
 
 @auth_router.get("/")
-def login():
-    return "hello world"
+def login(request: Request):
+    return templates.TemplateResponse(
+        "pages/login.html", {"request": request}
+    )
