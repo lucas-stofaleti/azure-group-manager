@@ -5,3 +5,4 @@ from app.routes import *
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.include_router(auth_router)
+app.include_router(home_router)
