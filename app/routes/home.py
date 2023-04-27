@@ -8,6 +8,13 @@ home_router = APIRouter(
     tags=["home"],
 )
 
+@home_router.get("/test")
+@requires_auth
+def home(request: Request):
+    return templates.TemplateResponse(
+        "pages/test.html", {"request": request}
+    )
+
 @home_router.get("/")
 @requires_auth
 def home(request: Request):
