@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-import msal
+from app.utils.identity import msal_client
+from app.utils.config import settings
 
 templates = Jinja2Templates(directory="app/templates")
 
@@ -10,35 +11,16 @@ auth_router = APIRouter(
     tags=["auth"],
 )
 
-value = msal.ConfidentialClientApplication(
-        "", authority="https://login.microsoftonline.com/",
-        client_credential="")
-
 @auth_router.get("/login")
-def login(request: Request):
-    url = value.get_authorization_request_url(scopes=[], redirect_uri="http://localhost:8000/auth/callback")
+def login(request: Request, msg: str | None = None, error: str | None = None):
+    url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
     return templates.TemplateResponse(
-        "pages/login.html", {"request": request, "url": url}
+        "pages/login.html", {"request": request, "url": url, "msg": msg, "error": error}
     )
 
-@auth_router.post("/login")
-def login_post(request: Request):
-    value = msal.ConfidentialClientApplication(
-        "b52287e5-8650-43dd-b760-498810711076", authority="https://login.microsoftonline.com/c56c9508-ff89-4cd0-95f4-aa3ec7fb056f",
-        client_credential="Pxr8Q~PrAZpVNAEsa.qFudQ2lPvVpF~WXJMlVbje")
-    url = value.get_authorization_request_url(scopes=[], redirect_uri="http://localhost:8000/auth/callback")
-    return RedirectResponse(url)
-
-@auth_router.get("/test")
-def test(request: Request):
-    value = msal.ConfidentialClientApplication(
-        "b52287e5-8650-43dd-b760-498810711076", authority="https://login.microsoftonline.com/c56c9508-ff89-4cd0-95f4-aa3ec7fb056f",
-        client_credential="Pxr8Q~PrAZpVNAEsa.qFudQ2lPvVpF~WXJMlVbje")
-    url = value.get_authorization_request_url(scopes=[], redirect_uri="http://localhost:8000/auth/callback")
-    print(url)
-    return "ok"
-
 @auth_router.get("/callback")
-def callback(request: Request):
-    
-    return "callback"
+def callback(code: str):
+    token = f'Bearer {msal_client.acquire_token_by_authorization_code(code=code, scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")["access_token"]}'
+    response = RedirectResponse(f"/", status_code=303)
+    response.set_cookie(key="token", value=token, httponly=True)
+    return response
