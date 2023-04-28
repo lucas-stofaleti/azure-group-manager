@@ -8,11 +8,11 @@ home_router = APIRouter(
     tags=["home"],
 )
 
-@home_router.get("/test")
+@home_router.get("/groups")
 @requires_auth
-def home(request: Request):
+def groups(request: Request):
     return templates.TemplateResponse(
-        "pages/test.html", {"request": request}
+        "pages/groups.html", {"request": request}
     )
 
 @home_router.get("/")

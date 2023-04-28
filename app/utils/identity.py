@@ -127,7 +127,7 @@ def requires_auth(f):
             except AuthError as auth_err:
                 url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
                 return templates.TemplateResponse(
-                    "pages/login.html", {"request": kwargs["request"], "url": url, "error": ex}, status_code=401
+                    "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
                 )
         url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
         return templates.TemplateResponse(
