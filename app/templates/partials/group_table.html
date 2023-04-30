@@ -1,0 +1,33 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Members</th>
+      <th scope="col">Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for group in groups %}
+    <tr>
+      <th scope="row"><a href="">{{group.id}}</a></th>
+      <th scope="row">{{group.name}}</th>
+      <td>{{group.description}}</td>
+      <td>{{group.members}}</td>
+      <td>
+        <span class="badge bg-secondary">New</span
+        ><span class="badge bg-secondary">New</span
+        ><span class="badge bg-secondary">New</span>
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th scope="row"><a href="">#001</a></th>
+      <th scope="row">nice-group</th>
+      <td>This groups gives read access to the PRD Database.</td>
+      <td>10</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>

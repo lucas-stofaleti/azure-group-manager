@@ -27,28 +27,40 @@
           </button>
         </div>
       </div>
-
-  
-
-      <div class="card">
-        <h5 class="card-header d-flex justify-content-between align-items-center">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="flexCheckChecked"
-            />
-            <label class="form-check-label" for="flexCheckChecked">
-              nice-group
-            </label>
-          </div>
-          <button type="button" class="btn btn-sm btn-primary">Details</button>
-        </h5>
-        <div class="card-body">
-          <p class="card-text">
-            Owner: Lucas Stofaleti\nApplication Name: my-app
-          </p>
+      Group Type
+      <select
+        class="form-select"
+        name="test"
+        hx-post="/filter"
+        hx-target="#groups"
+        aria-label="Default select example"
+      >
+        <option value="all" selected disabled>Select your membership.</option>
+        <option value="access">I do have access.</option>
+        <option value="no-access">I don't have access.</option>
+        <option value="admin">I am admin</option>
+      </select>
+      <select
+        class="form-select"
+        name="test2"
+        hx-post="/filter"
+        hx-target="#groups"
+        hx-include="[class='form-select']"
+        aria-label="Default select example"
+      >
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <div
+        id="groups"
+        hx-get="/list_groups"
+        hx-include="[class='form-select']"
+        hx-trigger="load"
+      >
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
     </main>
