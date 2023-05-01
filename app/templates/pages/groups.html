@@ -29,23 +29,25 @@
       </div>
       Group Type
       <select
-        class="form-select"
-        name="test"
-        hx-post="/filter"
+        class="form-select group-filters"
+        name="membership"
+        hx-get="/partials/groups"
         hx-target="#groups"
+        hx-include=".group-filters"
         aria-label="Default select example"
       >
         <option value="all" selected disabled>Select your membership.</option>
-        <option value="access">I do have access.</option>
-        <option value="no-access">I don't have access.</option>
+        <option value="all">All groups</option>
+        <option value="member">I am member</option>
         <option value="admin">I am admin</option>
+        <option value="no-access">I don't have access</option>
       </select>
       <select
-        class="form-select"
+        class="group-filters form-select"
         name="test2"
-        hx-post="/filter"
+        hx-get="/partials/groups"
         hx-target="#groups"
-        hx-include="[class='form-select']"
+        hx-include=".group-filters"
         aria-label="Default select example"
       >
         <option selected>Open this select menu</option>
@@ -55,11 +57,11 @@
       </select>
       <div
         id="groups"
-        hx-get="/list_groups"
-        hx-include="[class='form-select']"
+        hx-get="/partials/groups"
+        hx-include=".group-filters"
         hx-trigger="load"
       >
-        <div class="spinner-border" role="status">
+        <div class="spinner-border mt-3" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>

@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     tenant_id: str
     app_id: str
     client_secret: str
+    mongo_url: str
+    mongo_user: str
+    mongo_password: str
 
     class Config:
         env_file = ".env"
