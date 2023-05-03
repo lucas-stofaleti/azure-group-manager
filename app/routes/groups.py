@@ -4,13 +4,14 @@ from app.utils.identity import requires_auth
 
 templates = Jinja2Templates(directory="app/templates")
 
-home_router = APIRouter(
-    tags=["home"],
+group_router = APIRouter(
+    prefix="/groups",
+    tags=["groups"],
 )
 
-@home_router.get("/")
+@group_router.get("/")
 @requires_auth
-def home(request: Request):
+def groups(request: Request):
     return templates.TemplateResponse(
-        "pages/home.html", {"request": request}
+        "pages/groups.html", {"request": request}
     )

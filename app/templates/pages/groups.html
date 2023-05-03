@@ -1,5 +1,76 @@
 {% extends "shared/base.html" %} {% block css %} {% endblock %} {% block content
 %} {% include "shared/nav.html" %}
+<section class="decrypt-form">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="my-4 text-center">Groups</h2>
+        <p class="mb-4 text-center">
+          For more info on the Azure Group Manager, check out the About page on
+          the top right.
+        </p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="row col-lg-9">
+        <div class="col-lg-6 mb-3">
+          <div class="card h-100 bg-light text-center">
+            <div class="card-body">
+              <h5 class="card-title">Groups</h5>
+              <p class="card-text">
+                View groups available. Here you can select groups that you want
+                to request access.
+              </p>
+              <a href="/groups" class="btn btn-primary stretched-link"
+                >View Groups</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+          <div class="card h-100 bg-light text-center">
+            <div class="card-body">
+              <h5 class="card-title">Requests</h5>
+              <p class="card-text">
+                Here you can see your requests and approve other requests if you
+                are admin of a group.
+              </p>
+              <a href="/groups" class="btn btn-primary stretched-link"
+                >View Requests</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <div class="card h-100 bg-light text-center">
+            <div class="card-body">
+              <h5 class="card-title">New Group</h5>
+              <p class="card-text">Here you can create a new group.</p>
+              <a href="/groups" class="btn btn-primary stretched-link"
+                >Create Group</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <div class="card h-100 bg-light text-center">
+            <div class="card-body">
+              <h5 class="card-title">About</h5>
+              <p class="card-text">
+                If you want to understand more how the Azure Group Manager
+                works.
+              </p>
+              <a href="/groups" class="btn btn-primary stretched-link">About</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <div class="container-fluid">
   <div class="row">
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
