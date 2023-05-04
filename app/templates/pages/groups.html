@@ -11,57 +11,56 @@
         </p>
       </div>
     </div>
+    <div class="row justify-content-center mb-4">
+      <div class="col-lg-8">
+        <div class="card h-100 bg-light text-center">
+          <div class="card-body">
+            <select
+              class="form-select group-filters"
+              name="membership"
+              hx-get="/partials/groups"
+              hx-target="#groups"
+              hx-include=".group-filters"
+              aria-label="Default select example"
+            >
+              <option value="all" selected disabled>
+                Select your membership.
+              </option>
+              <option value="all">All groups</option>
+              <option value="member">I am member</option>
+              <option value="admin">I am admin</option>
+              <option value="no-access">I don't have access</option>
+            </select>
+            <select
+              class="group-filters form-select"
+              name="test2"
+              hx-get="/partials/groups"
+              hx-target="#groups"
+              hx-include=".group-filters"
+              aria-label="Default select example"
+            >
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row justify-content-center">
-      <div class="row col-lg-9">
-        <div class="col-lg-6 mb-3">
-          <div class="card h-100 bg-light text-center">
-            <div class="card-body">
-              <h5 class="card-title">Groups</h5>
-              <p class="card-text">
-                View groups available. Here you can select groups that you want
-                to request access.
-              </p>
-              <a href="/groups" class="btn btn-primary stretched-link"
-                >View Groups</a
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6 mb-3">
-          <div class="card h-100 bg-light text-center">
-            <div class="card-body">
-              <h5 class="card-title">Requests</h5>
-              <p class="card-text">
-                Here you can see your requests and approve other requests if you
-                are admin of a group.
-              </p>
-              <a href="/groups" class="btn btn-primary stretched-link"
-                >View Requests</a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 mb-3">
-          <div class="card h-100 bg-light text-center">
-            <div class="card-body">
-              <h5 class="card-title">New Group</h5>
-              <p class="card-text">Here you can create a new group.</p>
-              <a href="/groups" class="btn btn-primary stretched-link"
-                >Create Group</a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 mb-3">
-          <div class="card h-100 bg-light text-center">
-            <div class="card-body">
-              <h5 class="card-title">About</h5>
-              <p class="card-text">
-                If you want to understand more how the Azure Group Manager
-                works.
-              </p>
-              <a href="/groups" class="btn btn-primary stretched-link">About</a>
+      <div class="col-lg-8">
+        <div class="card h-100 bg-light text-center">
+          <div class="card-body">
+            <div
+              id="groups"
+              hx-get="/partials/groups"
+              hx-include=".group-filters"
+              hx-trigger="load"
+            >
+              <div class="spinner-border mt-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
           </div>
         </div>
@@ -69,55 +68,4 @@
     </div>
   </div>
 </section>
-
-
-<div class="container-fluid">
-  <div class="row">
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-      >
-        <h1 class="h2">Groups</h1>
-      </div>
-      Group Type
-      <select
-        class="form-select group-filters"
-        name="membership"
-        hx-get="/partials/groups"
-        hx-target="#groups"
-        hx-include=".group-filters"
-        aria-label="Default select example"
-      >
-        <option value="all" selected disabled>Select your membership.</option>
-        <option value="all">All groups</option>
-        <option value="member">I am member</option>
-        <option value="admin">I am admin</option>
-        <option value="no-access">I don't have access</option>
-      </select>
-      <select
-        class="group-filters form-select"
-        name="test2"
-        hx-get="/partials/groups"
-        hx-target="#groups"
-        hx-include=".group-filters"
-        aria-label="Default select example"
-      >
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-      <div
-        id="groups"
-        hx-get="/partials/groups"
-        hx-include=".group-filters"
-        hx-trigger="load"
-      >
-        <div class="spinner-border mt-3" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </main>
-  </div>
-</div>
 {% endblock %} {% block scripts %} {% endblock %}
