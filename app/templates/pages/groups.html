@@ -30,14 +30,7 @@
               >
               <div class="collapse" id="tipToken">
                 <div class="mb-2 card card-body" style="display: block">
-                  To protect ASML IP, an authorization token is required to use
-                  this service. Please contact
-                  <a
-                    href="mailto:dl-sw-data-quality@asml.com"
-                    style="display: inline-block"
-                    >dl-sw-data-quality@asml.com</a
-                  >
-                  to acquire a token.
+                  Search your group by name or group id.
                 </div>
               </div>
               <input
@@ -64,32 +57,24 @@
               >
               <div class="collapse" id="tipOptions">
                 <div class="mb-2 card card-body" style="display: block">
-                  <p class="fw-semibold mb-0">GZIP</p>
-                  <p>
-                    GZIPs the result document. Retrieving the decrypted data as
-                    a GZIP compressed document saves a lot of overhead for the
-                    server and the network.
-                  </p>
+                  <p class="fw-semibold mb-0">All Groups</p>
+                  <p>Get all groups available.</p>
 
-                  <p class="fw-semibold mb-0">Rename</p>
-                  <p>
-                    Renames the result document by prefixing the filename with
-                    "decrypted_".
-                  </p>
-                  <p style="color: #595959">
-                    In the future, this might change to:
-                    <br />
-                    Renames the result document. ADEL/IDAT: removes 'Protected'
-                    from filename. MDL: replaces '_encrypted' by '_decrypted' in
-                    filename.
-                  </p>
+                  <p class="fw-semibold mb-0">I am member</p>
+                  <p>Filter the groups you belong to.</p>
+
+                  <p class="fw-semibold mb-0">I am admin</p>
+                  <p>Filter the groups you are admin.</p>
+
+                  <p class="fw-semibold mb-0">I don't have access</p>
+                  <p>Filter groups that you are not part of.</p>
                 </div>
               </div>
             </div>
 
             <div
               class="form-check"
-              hx-get="/partials/groups"
+              hx-get="/groups/groups"
               hx-target="#groups"
               hx-include=".form-check-input"
             >
@@ -107,7 +92,7 @@
             </div>
             <div
               class="form-check"
-              hx-get="/partials/groups"
+              hx-get="/groups/groups"
               hx-target="#groups"
               hx-include=".form-check-input"
             >
@@ -124,7 +109,7 @@
             </div>
             <div
               class="form-check"
-              hx-get="/partials/groups"
+              hx-get="/groups/groups"
               hx-target="#groups"
               hx-include=".form-check-input"
             >
@@ -141,7 +126,7 @@
             </div>
             <div
               class="form-check"
-              hx-get="/partials/groups"
+              hx-get="/groups/groups"
               hx-target="#groups"
               hx-include=".form-check-input"
             >
@@ -167,7 +152,7 @@
           <div class="card-body">
             <div
               id="groups"
-              hx-get="/partials/groups"
+              hx-get="/groups/groups"
               hx-include=".form-check-input"
               hx-trigger="load"
             >
