@@ -29,6 +29,7 @@ def groups(request: Request, db = Depends(get_connection), membership: str = "al
 @requires_auth
 def group(request: Request, id: str, db = Depends(get_connection)):
     group = get_group(db, id=id)
+    print(group)
     return templates.TemplateResponse(
             "pages/group.html", {"request": request, "group": group}
     )

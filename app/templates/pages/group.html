@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2 class="my-4 text-center">Group {{group._id}}</h2>
+        <h2 class="my-4 text-center">Group</h2>
       </div>
     </div>
 
@@ -12,22 +12,30 @@
       <div class="col-lg-8">
         <div class="card bg-light">
           <div class="card-body">
-            <div class="mb-3">
-              <p><span class="fw-semibold">Name: </span>{{group.name}}</p>
-            </div>
-
             <div>
-              <label class="form-label fw-semibold">Options</label>
-              <a
-                class="ms-2 btn btn-sm btn-outline-dark"
-                style="--bs-btn-padding-y: 0.05rem"
-                data-bs-toggle="collapse"
-                href="#tipOptions"
-                role="button"
-                aria-expanded="false"
-                aria-controls="tipOptions"
-                >Tip</a
-              >
+              <p><span class="fw-semibold">ID: </span>{{group._id}}</p>
+              <p><span class="fw-semibold">Name: </span>{{group.name}}</p>
+              <p>
+                <span class="fw-semibold">Description: </span
+                >{{group.description}}
+              </p>
+
+              <div class="d-flex">
+                <p>
+                  <span class="fw-semibold">Members: </span
+                  >{{group.members|length}}
+                </p>
+                <a
+                  class="ms-2 btn btn-sm btn-outline-dark"
+                  style="--bs-btn-padding-y: 0.05rem"
+                  data-bs-toggle="collapse"
+                  href="#tipOptions"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="tipOptions"
+                  >Tip</a
+                >
+              </div>
               <div class="collapse" id="tipOptions">
                 <div class="mb-2 card card-body" style="display: block">
                   <p class="fw-semibold mb-0">All Groups</p>
@@ -43,76 +51,6 @@
                   <p>Filter groups that you are not part of.</p>
                 </div>
               </div>
-            </div>
-
-            <div
-              class="form-check"
-              hx-get="/groups"
-              hx-target="#groups"
-              hx-include=".form-check-input"
-            >
-              <input
-                class="form-check-input"
-                type="radio"
-                name="membership"
-                value="all"
-                id="flexRadioDefault1"
-                checked
-              />
-              <label class="form-check-label" for="flexRadioDefault1">
-                All groups
-              </label>
-            </div>
-            <div
-              class="form-check"
-              hx-get="/groups"
-              hx-target="#groups"
-              hx-include=".form-check-input"
-            >
-              <input
-                class="form-check-input"
-                type="radio"
-                name="membership"
-                value="member"
-                id="flexRadioDefault2"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                I am member
-              </label>
-            </div>
-            <div
-              class="form-check"
-              hx-get="/groups"
-              hx-target="#groups"
-              hx-include=".form-check-input"
-            >
-              <input
-                class="form-check-input"
-                type="radio"
-                name="membership"
-                value="admin"
-                id="flexRadioDefault3"
-              />
-              <label class="form-check-label" for="flexRadioDefault3">
-                I am admin
-              </label>
-            </div>
-            <div
-              class="form-check"
-              hx-get="/groups"
-              hx-target="#groups"
-              hx-include=".form-check-input"
-            >
-              <input
-                class="form-check-input"
-                type="radio"
-                name="membership"
-                value="no-access"
-                id="flexRadioDefault4"
-              />
-              <label class="form-check-label" for="flexRadioDefault4">
-                I don't have access
-              </label>
             </div>
           </div>
         </div>
