@@ -20,23 +20,21 @@
                 >{{group.description}}
               </p>
 
-              <div class="d-flex">
-                <p>
-                  <span class="fw-semibold">Members: </span
-                  >{{group.members|length}}
-                </p>
+              <p>
+                <span class="fw-semibold">Members: </span
+                >{{group.members|length}}
                 <a
                   class="ms-2 btn btn-sm btn-outline-dark"
                   style="--bs-btn-padding-y: 0.05rem"
                   data-bs-toggle="collapse"
-                  href="#tipOptions"
+                  href="#memberExpand"
                   role="button"
                   aria-expanded="false"
-                  aria-controls="tipOptions"
-                  >Tip</a
+                  aria-controls="memberExpand"
+                  >Expand</a
                 >
-              </div>
-              <div class="collapse" id="tipOptions">
+              </p>
+              <div class="collapse" id="memberExpand">
                 <div class="mb-2 card card-body" style="display: block">
                   <p class="fw-semibold mb-0">All Groups</p>
                   <p>Get all groups available.</p>
@@ -50,6 +48,41 @@
                   <p class="fw-semibold mb-0">I don't have access</p>
                   <p>Filter groups that you are not part of.</p>
                 </div>
+              </div>
+
+              <p>
+                <span class="fw-semibold">Admins: </span>{{group.admins|length}}
+                <a
+                  class="ms-2 btn btn-sm btn-outline-dark"
+                  style="--bs-btn-padding-y: 0.05rem"
+                  data-bs-toggle="collapse"
+                  href="#adminExpand"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="adminExpand"
+                  >Expand</a
+                >
+              </p>
+              <div class="collapse" id="adminExpand">
+                <div class="mb-2 card card-body" style="display: block">
+                  <p class="fw-semibold mb-0">All Groups</p>
+                  <p>Get all groups available.</p>
+
+                  <p class="fw-semibold mb-0">I am member</p>
+                  <p>Filter the groups you belong to.</p>
+
+                  <p class="fw-semibold mb-0">I am admin</p>
+                  <p>Filter the groups you are admin.</p>
+
+                  <p class="fw-semibold mb-0">I don't have access</p>
+                  <p>Filter groups that you are not part of.</p>
+                </div>
+              </div>
+              <div class="d-grid gap-2 d-flex justify-content-end">
+                <button class="btn btn-primary me-md-2" type="button">
+                  Button
+                </button>
+                <button class="btn btn-primary" type="button">Button</button>
               </div>
             </div>
           </div>
