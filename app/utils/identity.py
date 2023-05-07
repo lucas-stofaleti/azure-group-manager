@@ -53,7 +53,7 @@ def get_token_claims(request: Request):
 
 def validate_scope(required_scope:str, request: Request):
     has_valid_scope = False
-    token = get_token_auth_cookie(request);
+    token = get_token_auth_cookie(request)
     unverified_claims = jwt.get_unverified_claims(token)
     ## check to ensure that either a valid scope or a role is present in the token
     if unverified_claims.get("scp") is None and unverified_claims.get("roles") is None:
@@ -110,29 +110,42 @@ def requires_auth(f):
                             "e": key["e"]
                         }
         except AuthError as auth_err:
-            url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
-            return templates.TemplateResponse(
+            client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+            url = client["auth_uri"]
+            response = templates.TemplateResponse(
                 "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
             )
+            response.set_cookie(key="code_flow", value=client, httponly=True)
+            return response
+
         except Exception as ex:
-            url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
-            return templates.TemplateResponse(
-                "pages/login.html", {"request": kwargs["request"], "url": url, "error": ex}, status_code=401
+            client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+            url = client["auth_uri"]
+            response = templates.TemplateResponse(
+                "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
             )
+            response.set_cookie(key="code_flow", value=client, httponly=True)
+            return response
         if rsa_key:
             try :
                 token_version = __get_token_version(token)
                 __decode_JWT(token_version, token, rsa_key)
                 return f(*args, **kwargs)
             except AuthError as auth_err:
-                url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
-                return templates.TemplateResponse(
+                client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+                url = client["auth_uri"]
+                response = templates.TemplateResponse(
                     "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
                 )
-        url = msal_client.get_authorization_request_url(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
-        return templates.TemplateResponse(
-            "pages/login.html", {"request": kwargs["request"], "url": url, "error": "Invalid header error: Unable to find appropriate key"}, status_code=401
+                response.set_cookie(key="code_flow", value=client, httponly=True)
+                return response
+        client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+        url = client["auth_uri"]
+        response = templates.TemplateResponse(
+            "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
         )
+        response.set_cookie(key="code_flow", value=client, httponly=True)
+        return response
     return decorated
 
 def __decode_JWT(token_version, token, rsa_key):
@@ -154,8 +167,8 @@ def __decode_JWT(token_version, token, rsa_key):
         raise AuthError("Token error: The token has expired", 401)
     except jwt.JWTClaimsError:
         raise AuthError("Token error: Please check the audience and issuer", 401)
-    except Exception:
-        raise AuthError("Token error: Unable to parse authentication", 401)
+    except Exception as e:
+        raise AuthError(f"Token error: Unable to parse authentication: {e}", 401)
 
 def __get_token_version(token):
     unverified_claims = jwt.get_unverified_claims(token)

@@ -4,11 +4,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2 class="my-4 text-center">Groups</h2>
-        <p class="mb-4 text-center">
-          Here you can see the groups available. You can filter and search for
-          specific groups.
-        </p>
+        <h2 class="my-4 text-center">Group {{group._id}}</h2>
       </div>
     </div>
 
@@ -17,30 +13,7 @@
         <div class="card bg-light">
           <div class="card-body">
             <div class="mb-3">
-              <label for="token" class="form-label fw-semibold">Search</label>
-              <a
-                class="ms-2 btn btn-sm btn-outline-dark"
-                style="--bs-btn-padding-y: 0.05rem"
-                data-bs-toggle="collapse"
-                href="#tipToken"
-                role="button"
-                aria-expanded="false"
-                aria-controls="tipToken"
-                >Tip</a
-              >
-              <div class="collapse" id="tipToken">
-                <div class="mb-2 card card-body" style="display: block">
-                  Search your group by name or group id.
-                </div>
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                id="token"
-                name="token"
-                placeholder="Group name or ID"
-                required
-              />
+              <p><span class="fw-semibold">Name: </span>{{group.name}}</p>
             </div>
 
             <div>
@@ -140,25 +113,6 @@
               <label class="form-check-label" for="flexRadioDefault4">
                 I don't have access
               </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row justify-content-center mt-4">
-      <div class="col-lg-8">
-        <div class="card h-100 bg-light text-center">
-          <div class="card-body">
-            <div
-              id="groups"
-              hx-get="/groups"
-              hx-include=".form-check-input"
-              hx-trigger="load"
-            >
-              <div class="spinner-border mt-3" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
             </div>
           </div>
         </div>

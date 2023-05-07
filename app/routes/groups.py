@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Request, Depends
+from typing import Union
+from fastapi import APIRouter, Request, Depends, Header
 from fastapi.templating import Jinja2Templates
-from app.utils.identity import requires_auth
+from app.utils.identity import *
 from app.db.database import get_connection
 from app.db.crud import *
 
@@ -13,16 +14,21 @@ group_router = APIRouter(
 
 @group_router.get("/")
 @requires_auth
-def groups(request: Request):
-    return templates.TemplateResponse(
-        "pages/groups.html", {"request": request}
-    )
-
-@group_router.get("/groups")
-@requires_auth
 def groups(request: Request, db = Depends(get_connection), membership: str = "all"):
-    groups = list(get_groups(db))
-    print(groups)
+    if not request.headers.get('HX-Request'):
+        return templates.TemplateResponse(
+            "pages/groups.html", {"request": request}
+        )
+    user = get_token_claims(request)["oid"]
+    groups = list(get_groups(db, user=user, membership=membership))
     return templates.TemplateResponse(
         "partials/group_table.html", {"request": request, "groups": groups}
+    )
+
+@group_router.get("/{id}")
+@requires_auth
+def group(request: Request, id: str, db = Depends(get_connection)):
+    group = get_group(db, id=id)
+    return templates.TemplateResponse(
+            "pages/group.html", {"request": request, "group": group}
     )
