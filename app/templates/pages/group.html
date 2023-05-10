@@ -36,17 +36,24 @@
               </p>
               <div class="collapse" id="memberExpand">
                 <div class="mb-2 card card-body" style="display: block">
-                  <p class="fw-semibold mb-0">All Groups</p>
-                  <p>Get all groups available.</p>
-
-                  <p class="fw-semibold mb-0">I am member</p>
-                  <p>Filter the groups you belong to.</p>
-
-                  <p class="fw-semibold mb-0">I am admin</p>
-                  <p>Filter the groups you are admin.</p>
-
-                  <p class="fw-semibold mb-0">I don't have access</p>
-                  <p>Filter groups that you are not part of.</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">OID</th>
+                        <th scope="col">Unique Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for member in group.members %}
+                      <tr>
+                        <td>null</td>
+                        <td>{{member}}</td>
+                        <td>null</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
@@ -65,27 +72,100 @@
               </p>
               <div class="collapse" id="adminExpand">
                 <div class="mb-2 card card-body" style="display: block">
-                  <p class="fw-semibold mb-0">All Groups</p>
-                  <p>Get all groups available.</p>
-
-                  <p class="fw-semibold mb-0">I am member</p>
-                  <p>Filter the groups you belong to.</p>
-
-                  <p class="fw-semibold mb-0">I am admin</p>
-                  <p>Filter the groups you are admin.</p>
-
-                  <p class="fw-semibold mb-0">I don't have access</p>
-                  <p>Filter groups that you are not part of.</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">OID</th>
+                        <th scope="col">Unique Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for admin in group.admins %}
+                      <tr>
+                        <td>null</td>
+                        <td>{{admin}}</td>
+                        <td>null</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div class="d-grid gap-2 d-flex justify-content-end">
-                <button class="btn btn-primary me-md-2" type="button">
-                  Button
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-end">
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#accessModal"
+                >
+                  Request Acess
                 </button>
-                <button class="btn btn-primary" type="button">Button</button>
+                <button class="btn btn-danger" disabled type="button">
+                  Delete Group
+                </button>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="accessModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Request Access
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form method="post">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="group-id" class="col-form-label">Group:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="group-id"
+                  readonly
+                  name="group"
+                  placeholder="{{group._id}}"
+                  value="{{group._id}}"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label"
+                  >Motivation:</label
+                >
+                <textarea class="form-control" id="message-text" name="motivation"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

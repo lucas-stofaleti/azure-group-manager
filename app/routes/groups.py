@@ -33,3 +33,12 @@ def group(request: Request, id: str, db = Depends(get_connection)):
     return templates.TemplateResponse(
             "pages/group.html", {"request": request, "group": group}
     )
+
+@group_router.post("/{id}")
+@requires_auth
+def group_post(request: Request, id: str, db = Depends(get_connection)):
+    group = get_group(db, id=id)
+    print(group)
+    return templates.TemplateResponse(
+            "pages/group.html", {"request": request, "group": group}
+    )
