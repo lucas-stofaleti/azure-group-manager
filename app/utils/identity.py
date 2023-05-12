@@ -122,7 +122,7 @@ def requires_auth(f):
             client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
             url = client["auth_uri"]
             response = templates.TemplateResponse(
-                "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
+                "pages/login.html", {"request": kwargs["request"], "url": url, "error": ex}, status_code=401
             )
             response.set_cookie(key="code_flow", value=client, httponly=True)
             return response
