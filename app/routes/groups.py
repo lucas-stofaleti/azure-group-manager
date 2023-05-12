@@ -45,10 +45,8 @@ def group_post(request: Request, id: str, motivation: str = Form(...), mode: str
 
 ### GROUP POST UTILS ###
 def request_access(group, group_id: str, user: str, db, request: Request, motivation: str):
-    requests = list(get_request(db=db, group_id=group_id, user=user))
-    has_request = [element["status"] for element in requests]
-    print(has_request)
-    if has_request and ("Approved" in has_request or "Waiting approval" in has_request):
+    has_request = list(get_requests(db=db, group_id=group_id, user=user, status="Waiting approval"))
+    if has_request:
         err = f"User already requested access to this group."
         response = templates.TemplateResponse(
             "pages/group.html", {"request": request, "group": group, "error": err}

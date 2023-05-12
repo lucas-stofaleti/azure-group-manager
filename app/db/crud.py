@@ -33,9 +33,16 @@ def create_request(db, motivation: str, id: str, user: str):
     })
     return request
 
-def get_request(db, group_id: str, user: str):
-    request = db.requests.find({
-        "group_id": ObjectId(group_id),
-        "user_id": user
-    })
+def get_requests(db, group_id: str, user: str, status = None):
+    if status:
+        request = db.requests.find({
+            "group_id": ObjectId(group_id),
+            "user_id": user,
+            "status": status
+        })
+    else:
+        request = db.requests.find({
+            "group_id": ObjectId(group_id),
+            "user_id": user
+        })
     return request
