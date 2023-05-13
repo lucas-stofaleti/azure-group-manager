@@ -29,9 +29,13 @@ def groups(request: Request, db = Depends(get_connection), membership: str = "al
 @requires_auth
 def group(request: Request, id: str, db = Depends(get_connection)):
     group = get_group(db, id=id)
+    if not request.headers.get('HX-Request'):
+        return templates.TemplateResponse(
+                "pages/group.html", {"request": request, "group": group}
+        )
     return templates.TemplateResponse(
-            "pages/group.html", {"request": request, "group": group}
-    )
+                "partials/member_table.html", {"request": request, "group": group}
+        )
 
 @group_router.post("/{id}")
 @requires_auth
@@ -45,6 +49,14 @@ def group_post(request: Request, id: str, motivation: str = Form(...), mode: str
 
 ### GROUP POST UTILS ###
 def request_access(group, group_id: str, user: str, db, request: Request, motivation: str):
+    is_member = list(get_groups(db=db, user=user, membership="member"))
+    if is_member:
+        err = f"User is already member of this group."
+        response = templates.TemplateResponse(
+            "pages/group.html", {"request": request, "group": group, "error": err}
+        )
+        response.status_code = status.HTTP_409_CONFLICT
+        return response
     has_request = list(get_requests(db=db, group_id=group_id, user=user, status="Waiting approval"))
     if has_request:
         err = f"User already requested access to this group."

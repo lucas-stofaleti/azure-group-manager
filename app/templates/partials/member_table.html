@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">OID</th>
+      <th scope="col">Unique Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in group.members %}
+    <tr>
+      <td>null</td>
+      <td>{{member}}</td>
+      <td>null</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
