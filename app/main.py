@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import logging
 from app.routes import *
 from app.db.database import connect_to_mongo, close_mongo_connection
+from app.utils.graph import check_graph_connection
 
 logging.basicConfig(encoding='utf-8', level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -13,6 +14,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     connect_to_mongo()
+    check_graph_connection()
     yield
     close_mongo_connection()
 
