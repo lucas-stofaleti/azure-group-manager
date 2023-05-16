@@ -14,7 +14,6 @@ home_router = APIRouter(
 @home_router.get("/")
 @requires_auth
 def home(request: Request):
-    logger.info('Home executed')
     return templates.TemplateResponse(
         "pages/home.html", {"request": request}
     )
