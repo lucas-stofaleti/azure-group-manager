@@ -1,4 +1,3 @@
-from bson import ObjectId
 from datetime import datetime
 
 def get_groups(db, user: str, membership: str = "all"):
