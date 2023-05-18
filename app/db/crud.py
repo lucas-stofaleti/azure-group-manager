@@ -19,13 +19,13 @@ def get_groups(db, user: str, membership: str = "all"):
     return groups
 
 def get_group(db, id: str):
-    group = db.groups.find_one({"_id": ObjectId(id)})
+    group = db.groups.find_one({"_id": id})
     return group
 
 def create_request(db, motivation: str, id: str, user: str):
     now = datetime.now()
     request = db.requests.insert_one({
-        "group_id": ObjectId(id),
+        "group_id": id,
         "request_time": now,
         "user_id": user,
         "motivation": motivation,
@@ -36,13 +36,13 @@ def create_request(db, motivation: str, id: str, user: str):
 def get_requests(db, group_id: str, user: str, status = None):
     if status:
         request = db.requests.find({
-            "group_id": ObjectId(group_id),
+            "group_id": group_id,
             "user_id": user,
             "status": status
         })
     else:
         request = db.requests.find({
-            "group_id": ObjectId(group_id),
+            "group_id": group_id,
             "user_id": user
         })
     return request

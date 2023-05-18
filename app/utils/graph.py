@@ -23,10 +23,19 @@ def _get_graph_token():
     return access_token
 
 def get_user(id: str):
-    url = f"{url}/v1.0/users/{id}"
+    endpoint = f"{url}/users/{id}"
     token = _get_graph_token().token
     headers = {
         "Authorization": token
     }
-    r = requests.get(url, headers=headers)
+    r = requests.get(endpoint, headers=headers)
+    return r
+
+def list_group_members(id: str):
+    endpoint = f"{url}/groups/{id}/members"
+    token = _get_graph_token().token
+    headers = {
+        "Authorization": token
+    }
+    r = requests.get(endpoint, headers=headers)
     return r
