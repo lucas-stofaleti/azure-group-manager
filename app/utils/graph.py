@@ -39,3 +39,34 @@ def list_group_members(id: str):
     }
     r = requests.get(endpoint, headers=headers)
     return r
+
+def create_group_graph(name: str, description: str, user_id: str):
+    endpoint = f"{url}/groups"
+    token = _get_graph_token().token
+    headers = {
+        "Authorization": token,
+        "Content-Type": "application/json"
+    }
+    data = {
+        "description": description,
+        "displayName": name,
+        "groupTypes": [
+        ],
+        "mailEnabled": False,
+        "mailNickname": "devops",
+        "securityEnabled": True,
+        "owners@odata.bind": [
+            f"{url}/users/{user_id}"
+        ],
+        "members@odata.bind": [
+            f"{url}/users/{user_id}"
+        ]
+    }   
+    try:
+        r = requests.post(endpoint, headers=headers, json=data)
+        r.raise_for_status()
+    except Exception as e:
+        logger.error(f"An error ocurred while trying to create a group: {e}")
+        logger.error(f"Response from Microsoft: {r.json()}")
+        raise
+    return r

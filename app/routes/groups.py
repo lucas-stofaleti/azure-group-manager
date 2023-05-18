@@ -3,7 +3,7 @@ from fastapi.templating import Jinja2Templates
 from app.utils.identity import *
 from app.db.database import get_connection
 from app.db.crud import *
-from app.utils.graph import list_group_members
+from app.utils.graph import list_group_members, create_group_graph
 
 templates = Jinja2Templates(directory="app/templates")
 
@@ -24,6 +24,31 @@ def groups(request: Request, db = Depends(get_connection), membership: str = "al
     return templates.TemplateResponse(
         "partials/group_table.html", {"request": request, "groups": groups}
     )
+
+@group_router.get("/create")
+@requires_auth
+def create_group(request: Request, db = Depends(get_connection)):
+    return templates.TemplateResponse(
+                "pages/create_group.html", {"request": request}
+        )
+
+@group_router.post("/create")
+@requires_auth
+def create_group_post(request: Request, db = Depends(get_connection), name: str = Form(...), description: str = Form(...)):
+    group = get_group_by_name(db=db, name=name)
+    if group:
+        err = f"A group with the same name already exists."
+        response = templates.TemplateResponse(
+            "pages/create_group.html", {"request": request, "error": err}
+        )
+        response.status_code = status.HTTP_409_CONFLICT
+        return response
+    user_id = get_token_claims(request)["oid"]
+    response = create_group_graph(name=name, description=description, user_id=user_id)
+    insertion_id = create_group_db(db=db, description=description, name=name, user_id=user_id, group_id=response.json()["id"]).inserted_id
+    return templates.TemplateResponse(
+                "pages/create_group.html", {"request": request, "msg": f"Group {insertion_id} created!"}
+        )
 
 @group_router.get("/{id}")
 @requires_auth

@@ -1,0 +1,67 @@
+{% extends "shared/base.html" %} {% block css %} {% endblock %} {% block content
+%} {% include "shared/nav.html" %}
+<section class="decrypt-form">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="my-4 text-center">New Group</h2>
+        <p class="mb-4 text-center">
+          Here you can create a new Azure AD Security Group. After the creation,
+          you will be automatically added as owner and member.
+        </p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      {% if error %}
+
+      <div class="alert alert-danger col-lg-8" role="alert">{{error}}</div>
+      {% endif %} {% if msg %}
+      <div class="alert alert-success col-lg-8" role="alert">{{msg}}</div>
+
+      {% endif %}
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card bg-light">
+          <div class="card-body">
+            <form method="post">
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="group-id" class="col-form-label">Name:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    required
+                    name="name"
+                    placeholder="Give a name to your new group"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label"
+                    >Description:</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    placeholder="Provide a description for your new group. Good descriptions can make it easier for others to find your group."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                  Create Group
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %} {% endblock %}

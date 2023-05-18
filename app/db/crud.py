@@ -21,6 +21,10 @@ def get_group(db, id: str):
     group = db.groups.find_one({"_id": id})
     return group
 
+def get_group_by_name(db, name: str):
+    group = db.groups.find_one({"name": name})
+    return group
+
 def create_request(db, motivation: str, id: str, user: str):
     now = datetime.now()
     request = db.requests.insert_one({
@@ -31,6 +35,20 @@ def create_request(db, motivation: str, id: str, user: str):
         "status": "Waiting approval"
     })
     return request
+
+def create_group_db(db, description: str, user_id: str, name: str, group_id: str):
+    now = datetime.now()
+    request = db.groups.insert_one({
+        "_id": group_id,
+        "name": name,
+        "creation_time": now,
+        "members": [user_id],
+        "owners": [user_id],
+        "description": description,
+        "is_active": True
+    })
+    return request
+
 
 def get_requests(db, group_id: str, user: str, status = None):
     if status:
