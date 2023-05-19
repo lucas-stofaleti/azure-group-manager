@@ -10,7 +10,6 @@ logging.basicConfig(encoding='utf-8', level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     connect_to_mongo()
