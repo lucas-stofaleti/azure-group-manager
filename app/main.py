@@ -5,6 +5,7 @@ import logging
 from app.routes import *
 from app.db.database import connect_to_mongo, close_mongo_connection
 from app.utils.graph import check_graph_connection
+from app.utils.identity import initialize
 
 logging.basicConfig(encoding='utf-8', level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -14,6 +15,9 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     connect_to_mongo()
     check_graph_connection()
+    logger.info("Initalizing Azure Identity...")
+    initialize()
+    logger.info("Azure Identity initialized!")
     yield
     close_mongo_connection()
 

@@ -1,4 +1,5 @@
 import httpx
+import logging
 from httpx import Response
 from fastapi import Request
 from functools import wraps
@@ -8,19 +9,18 @@ import msal
 from .config import settings
 
 templates = Jinja2Templates(directory="app/templates")
+logger = logging.getLogger(__name__)
 
-def initialize(
-    tenant_id_, 
-    client_id_):
+def initialize():
+    logger.info("Initalizing Azure Identity...")
     global tenant_id, client_id
-    tenant_id = tenant_id_
-    client_id = client_id_
+    tenant_id = settings.tenant_id
+    client_id = settings.app_id
+    logger.info("Azure Identity initialized!")
 
 msal_client = msal.ConfidentialClientApplication(
         settings.app_id, authority=f"https://login.microsoftonline.com/{settings.tenant_id}",
         client_credential=settings.client_secret)
-
-initialize(settings.tenant_id, settings.app_id)
 
 class AuthError(Exception):
     def __init__(self, error_msg:str, status_code:int):

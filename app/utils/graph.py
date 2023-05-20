@@ -1,11 +1,10 @@
-from app.utils.config import settings
 import requests
 import logging
 from azure.identity import ClientSecretCredential
+from app.utils.config import settings
 
 logger = logging.getLogger(__name__)
 
-authority = f'https://login.microsoftonline.com/{settings.tenant_id}'
 scope = 'https://graph.microsoft.com/.default'
 url = "https://graph.microsoft.com/v1.0"
 
