@@ -11,7 +11,7 @@ db = DataBase()
 
 def connect_to_mongo():
     logger.info('Initializing Mongo Client...')
-    db.client = pymongo.MongoClient(f"mongodb+srv://{settings.mongo_user}:{settings.mongo_password}@groupmanager.uktamsp.mongodb.net/?retryWrites=true&w=majority")
+    db.client = pymongo.MongoClient(f"mongodb+srv://{settings.mongo_user}:{settings.mongo_password}@{settings.mongo_url}/?retryWrites=true&w=majority")
     check_db()
     logger.info('Connected to Mongo DB!')
 

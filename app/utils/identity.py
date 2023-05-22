@@ -85,6 +85,67 @@ def validate_scope(required_scope:str, request: Request):
     elif not has_valid_scope:
         raise AuthError(f'IDW10203: The "scope" or "scp" claim does not contain scopes {required_scope} or was not found', 403) 
 
+async def function():
+    try:
+        token = get_token_auth_cookie(kwargs["request"])
+        url = f'https://login.microsoftonline.com/{tenant_id}/discovery/v2.0/keys'
+        
+        async with httpx.AsyncClient() as client:
+            resp: Response = await client.get(url)
+            if resp.status_code != 200:
+                raise AuthError("Problem with Azure AD discovery URL", status_code=404)
+
+            jwks = resp.json()
+            unverified_header = jwt.get_unverified_header(token)
+            rsa_key = {}
+            for key in jwks["keys"]:
+                if key["kid"] == unverified_header["kid"]:
+                    rsa_key = {
+                        "kty": key["kty"],
+                        "kid": key["kid"],
+                        "use": key["use"],
+                        "n": key["n"],
+                        "e": key["e"]
+                    }
+    except AuthError as auth_err:
+        client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+        url = client["auth_uri"]
+        response = templates.TemplateResponse(
+            "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
+        )
+        response.set_cookie(key="code_flow", value=client, httponly=True)
+        return response
+
+    except Exception as ex:
+        client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+        url = client["auth_uri"]
+        response = templates.TemplateResponse(
+            "pages/login.html", {"request": kwargs["request"], "url": url, "error": ex}, status_code=401
+        )
+        response.set_cookie(key="code_flow", value=client, httponly=True)
+        return response
+    if rsa_key:
+        try :
+            token_version = __get_token_version(token)
+            __decode_JWT(token_version, token, rsa_key)
+            return f(*args, **kwargs)
+        except AuthError as auth_err:
+            client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+            url = client["auth_uri"]
+            response = templates.TemplateResponse(
+                "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
+            )
+            response.set_cookie(key="code_flow", value=client, httponly=True)
+            return response
+    client = msal_client.initiate_auth_code_flow(scopes=[settings.scope], redirect_uri=f"{settings.domain}/auth/callback")
+    url = client["auth_uri"]
+    response = templates.TemplateResponse(
+        "pages/login.html", {"request": kwargs["request"], "url": url, "error": auth_err}, status_code=401
+    )
+    response.set_cookie(key="code_flow", value=client, httponly=True)
+    return response
+    pass
+
 def requires_auth(f):
     @wraps(f)
     async def decorated(*args, **kwargs):
