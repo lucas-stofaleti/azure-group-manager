@@ -15,6 +15,8 @@ request_router = APIRouter(
 @request_router.get("/")
 @requires_auth
 def request(request: Request):
-    # user = get_graph_user("123")
-    auth = request.cookies.get("token", None)
-    return auth
+    if not request.headers.get('HX-Request'):
+        return templates.TemplateResponse(
+            "pages/requests.html", {"request": request}
+        )
+    

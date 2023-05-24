@@ -63,3 +63,7 @@ def get_requests(db, group_id: str, user: str, status = None):
             "user_id": user
         })
     return request
+
+def get_requests_by_filter(db, filter: dict):
+    request = db.requests.find(filter)
+    return request

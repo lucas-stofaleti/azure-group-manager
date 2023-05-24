@@ -1,0 +1,143 @@
+{% extends "shared/base.html" %} {% block css %} {% endblock %} {% block content
+%} {% include "shared/nav.html" %}
+<section class="decrypt-form">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="my-4 text-center">Requests</h2>
+        <p class="mb-4 text-center">
+          Here you can see the requests available. You can filter and search for
+          specific requests.
+        </p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card bg-light">
+          <div class="card-body">
+            <div class="mb-3">
+            <div>
+              <label class="form-label fw-semibold">Options</label>
+              <a
+                class="ms-2 btn btn-sm btn-outline-dark"
+                style="--bs-btn-padding-y: 0.05rem"
+                data-bs-toggle="collapse"
+                href="#tipOptions"
+                role="button"
+                aria-expanded="false"
+                aria-controls="tipOptions"
+                >Tip</a
+              >
+              <div class="collapse" id="tipOptions">
+                <div class="mb-2 card card-body" style="display: block">
+                  <p class="fw-semibold mb-0">All Groups</p>
+                  <p>Get all groups available.</p>
+
+                  <p class="fw-semibold mb-0">I am member</p>
+                  <p>Filter the groups you belong to.</p>
+
+                  <p class="fw-semibold mb-0">I am admin</p>
+                  <p>Filter the groups you are admin.</p>
+
+                  <p class="fw-semibold mb-0">I don't have access</p>
+                  <p>Filter groups that you are not part of.</p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="form-check"
+              hx-get="/requests"
+              hx-target="#groups"
+              hx-include=".form-check-input"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="membership"
+                value="all"
+                id="flexRadioDefault1"
+                checked
+              />
+              <label class="form-check-label" for="flexRadioDefault1">
+                All groups
+              </label>
+            </div>
+            <div
+              class="form-check"
+              hx-get="/requests"
+              hx-target="#groups"
+              hx-include=".form-check-input"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="membership"
+                value="member"
+                id="flexRadioDefault2"
+              />
+              <label class="form-check-label" for="flexRadioDefault2">
+                I am member
+              </label>
+            </div>
+            <div
+              class="form-check"
+              hx-get="/requests"
+              hx-target="#groups"
+              hx-include=".form-check-input"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="membership"
+                value="admin"
+                id="flexRadioDefault3"
+              />
+              <label class="form-check-label" for="flexRadioDefault3">
+                I am admin
+              </label>
+            </div>
+            <div
+              class="form-check"
+              hx-get="/requests"
+              hx-target="#groups"
+              hx-include=".form-check-input"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="membership"
+                value="no-access"
+                id="flexRadioDefault4"
+              />
+              <label class="form-check-label" for="flexRadioDefault4">
+                I don't have access
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+      <div class="col-lg-8">
+        <div class="card h-100 bg-light text-center">
+          <div class="card-body">
+            <div
+              id="groups"
+              hx-get="/requests"
+              hx-include=".form-check-input"
+              hx-trigger="load"
+            >
+              <div class="spinner-border mt-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %} {% endblock %}
