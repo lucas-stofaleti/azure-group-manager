@@ -19,4 +19,6 @@ def request(request: Request):
         return templates.TemplateResponse(
             "pages/requests.html", {"request": request}
         )
+    user = user = get_token_claims(request)["oid"]
+    print(user)
     
