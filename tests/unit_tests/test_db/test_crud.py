@@ -39,5 +39,4 @@ def test_get_requests_by_filter(db):
     assert requests == [DUMMY_REQUESTS[0]]
     # Filter by group
     requests = list(get_requests_by_filter(db=db, filter={"group_id": DUMMY_REQUESTS[1]["group_id"]}))
-    print(requests)
     assert DUMMY_REQUESTS[1] in requests

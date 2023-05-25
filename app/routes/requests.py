@@ -14,11 +14,18 @@ request_router = APIRouter(
 
 @request_router.get("/")
 @requires_auth
-def request(request: Request):
+def request(request: Request, status: str = None, requestor: str = None):
     if not request.headers.get('HX-Request'):
         return templates.TemplateResponse(
             "pages/requests.html", {"request": request}
         )
-    user = user = get_token_claims(request)["oid"]
-    print(user)
-    
+    user = get_token_claims(request)["oid"]
+    filter = {}
+    if requestor == "me": 
+        filter["user_id"] = user
+    elif requestor == "owner":
+        pass
+    filter = {
+        "user_id": user
+    }
+

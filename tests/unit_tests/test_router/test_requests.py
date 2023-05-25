@@ -10,7 +10,6 @@ TOKEN = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9m
 client = TestClient(app, cookies={
     "token": TOKEN
 })
-# client = TestClient(app)
 
 def test_requests_home(mocker):
     mocker.patch(
