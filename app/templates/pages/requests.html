@@ -16,40 +16,35 @@
       <div class="col-lg-8">
         <div class="card bg-light">
           <div class="card-body">
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Status</label>
-              <a
-                class="ms-2 btn btn-sm btn-outline-dark"
-                style="--bs-btn-padding-y: 0.05rem"
-                data-bs-toggle="collapse"
-                href="#tipOptions"
-                role="button"
-                aria-expanded="false"
-                aria-controls="tipOptions"
-                >Tip</a
-              >
-              <div class="collapse" id="tipOptions">
-                <div class="mb-2 card card-body" style="display: block">
-                  <p class="fw-semibold mb-0">All Requests</p>
-                  <p>View all requests.</p>
+            <label class="form-label fw-semibold">Status</label>
+            <a
+              class="ms-2 btn btn-sm btn-outline-dark"
+              style="--bs-btn-padding-y: 0.05rem"
+              data-bs-toggle="collapse"
+              href="#tipOptions"
+              role="button"
+              aria-expanded="false"
+              aria-controls="tipOptions"
+              >Tip</a
+            >
+            <div class="collapse" id="tipOptions">
+              <div class="mb-2 card card-body" style="display: block">
+                <p class="fw-semibold mb-0">All Requests</p>
+                <p>View all requests.</p>
 
-                  <p class="fw-semibold mb-0">Waiting for approval</p>
-                  <p>View requests waiting for approval</p>
+                <p class="fw-semibold mb-0">Waiting for approval</p>
+                <p>View requests waiting for approval</p>
 
-                  <p class="fw-semibold mb-0">Approved</p>
-                  <p>View approved requests.</p>
+                <p class="fw-semibold mb-0">Approved</p>
+                <p>View approved requests.</p>
 
-                  <p class="fw-semibold mb-0">Denied</p>
-                  <p>View denied requests.</p>
-                </div>
+                <p class="fw-semibold mb-0">Denied</p>
+                <p>View denied requests.</p>
               </div>
+            </div>
 
-              <div
-                class="form-check"
-                hx-get="/requests"
-                hx-target="#requests"
-                hx-include=".form-check-input"
-              >
+            <form action="">
+              <div class="form-check">
                 <input
                   class="form-check-input"
                   type="radio"
@@ -57,123 +52,114 @@
                   value="all"
                   id="flexRadioDefault1"
                   checked
+                  hx-get="/requests/"
+                  hx-target="#requests"
+                  hx-include=".form-check-input"
                 />
                 <label class="form-check-label" for="flexRadioDefault1">
                   All Requests
                 </label>
               </div>
-              <div
-                class="form-check"
-                hx-get="/requests"
-                hx-target="#requests"
-                hx-include=".form-check-input"
-              >
+              <div class="form-check">
                 <input
                   class="form-check-input"
                   type="radio"
                   name="status"
                   value="waiting"
                   id="flexRadioDefault2"
+                  hx-get="/requests/"
+                  hx-target="#requests"
+                  hx-include=".form-check-input"
                 />
                 <label class="form-check-label" for="flexRadioDefault2">
                   Waiting for approval
                 </label>
               </div>
-              <div
-                class="form-check"
-                hx-get="/requests"
-                hx-target="#requests"
-                hx-include=".form-check-input"
-              >
+              <div class="form-check">
                 <input
                   class="form-check-input"
                   type="radio"
                   name="status"
                   value="approved"
                   id="flexRadioDefault3"
+                  hx-get="/requests/"
+                  hx-target="#requests"
+                  hx-include=".form-check-input"
                 />
                 <label class="form-check-label" for="flexRadioDefault3">
                   Approved
                 </label>
               </div>
-              <div
-                class="form-check"
-                hx-get="/requests"
-                hx-target="#requests"
-                hx-include=".form-check-input"
-              >
+              <div class="form-check">
                 <input
                   class="form-check-input"
                   type="radio"
                   name="status"
                   value="denied"
                   id="flexRadioDefault4"
+                  hx-get="/requests/"
+                  hx-target="#requests"
+                  hx-include=".form-check-input"
                 />
                 <label class="form-check-label" for="flexRadioDefault4">
                   Denied
                 </label>
               </div>
-            </div>
+            </form>
 
-            <div class="mb-3">
-              <div>
-                <label class="form-label fw-semibold">Requestor</label>
-                <a
-                  class="ms-2 btn btn-sm btn-outline-dark"
-                  style="--bs-btn-padding-y: 0.05rem"
-                  data-bs-toggle="collapse"
-                  href="#tipOptionsRequestor"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="tipOptionsRequestor"
-                  >Tip</a
-                >
-                <div class="collapse" id="tipOptionsRequestor">
-                  <div class="mb-2 card card-body" style="display: block">
-                    <p class="fw-semibold mb-0">My Requests</p>
-                    <p>View requests created by you.</p>
+            <div class="mt-3">
+              <label class="form-label fw-semibold">Requestor</label>
+              <a
+                class="ms-2 btn btn-sm btn-outline-dark"
+                style="--bs-btn-padding-y: 0.05rem"
+                data-bs-toggle="collapse"
+                href="#tipOptionsRequestor"
+                role="button"
+                aria-expanded="false"
+                aria-controls="tipOptionsRequestor"
+                >Tip</a
+              >
+              <div class="collapse" id="tipOptionsRequestor">
+                <div class="mb-2 card card-body" style="display: block">
+                  <p class="fw-semibold mb-0">My Requests</p>
+                  <p>View requests created by you.</p>
 
-                    <p class="fw-semibold mb-0">Assigned to me</p>
-                    <p>Requests that you need to approve.</p>
-                  </div>
+                  <p class="fw-semibold mb-0">Assigned to me</p>
+                  <p>Requests that you need to approve.</p>
                 </div>
               </div>
+            </div>
 
-              <div
-                class="form-check"
-                hx-get="/requests"
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="requestor"
+                value="me"
+                id="flexRadioDefault5"
+                checked
+                hx-get="/requests/"
                 hx-target="#requests"
                 hx-include=".form-check-input"
-              >
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="requestor"
-                  value="me"
-                  id="flexRadioDefault5"
-                  checked
-                />
-                <label class="form-check-label" for="flexRadioDefault5">
-                  My Requests
-                </label>
-              </div>
-              <div
-                class="form-check"
-                hx-get="/requests"
+              />
+              <label class="form-check-label" for="flexRadioDefault5">
+                My Requests
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="requestor"
+                value="owner"
+                id="flexRadioDefault6"
+                hx-get="/requests/"
                 hx-target="#requests"
                 hx-include=".form-check-input"
-              >
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="requestor"
-                  value="owner"
-                  id="flexRadioDefault6"
-                />
-                <label class="form-check-label" for="flexRadioDefault6">
-                  Assigned to me
-                </label>
-              </div>
+              />
+              <label class="form-check-label" for="flexRadioDefault6">
+                Assigned to me
+              </label>
             </div>
           </div>
         </div>
@@ -186,7 +172,7 @@
           <div class="card-body">
             <div
               id="requests"
-              hx-get="/requests"
+              hx-get="/requests/"
               hx-include=".form-check-input"
               hx-trigger="load"
             >
